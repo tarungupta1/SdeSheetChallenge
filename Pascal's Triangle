@@ -14,69 +14,71 @@ Space Complexity: O(N * N), where N is the number of rows
 Solution
 
 APPROACH 1
-#include <bits/stdc++.h> 
-vector<vector<long long int>> printPascal(int n) {
-  // Write your code here.
-    
-    vector<vector<long long int>> ans;
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
         
-    // using formulae:  nCr = (nCr-1 * (n - r + 1)/r)              
-    for(long long int i=0; i<n; i++){
-
-        vector<long long int> current;
-        // starting number for every row is 1
-        current.push_back(1);
-
-        // remaining number in the row are found out by the above formulae
-        long long int val = 1;
-        for(long long int j=1; j<=i; j++){
-            val = (val * (i - j + 1)) / j;
-            current.push_back(val);
+        vector<vector<int>> ans;
+        
+        // using formulae:  nCr = (nCr-1 * (n - r + 1)/r)              
+        for(int i=0; i<numRows; i++){
+            
+            vector<int> current;
+            // starting number for every row is 1
+            current.push_back(1);
+            
+            // remaining number in the row are found out by the above formula
+            int val = 1;
+            for(int j=1; j<=i; j++){
+                val = (val * (i - j + 1)) / j;
+                current.push_back(val);
+            }
+            
+            ans.push_back(current);
         }
-
-        ans.push_back(current);
+        
+        return ans;
     }
-
-    return ans;
-}
+};
 
 
 
 APPROACH 2
-#include <bits/stdc++.h> 
-vector<vector<long long int>> printPascal(int n) {
-  // Write your code here.
-    
-    vector<vector<long long int>> ans;
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
         
-    // Each triangle element (other than the first and last of each row) is equal to the sum of the elements 'above-and-to-the-left' and 'above-and-to-the-right'.
-    for(int i=0; i<n; i++){
-
-        // Base case; first row is always [1].
-        if(i == 0){
-            vector<long long int> current;
-            current.push_back(1);
-            ans.push_back(current);              
-            continue;
+        vector<vector<int>> ans;
+        
+        // Each triangle element (other than the first and last of each row) is equal to the sum of the elements 'above-and-to-the-left' and 'above-and-to-the-right'.
+        for(int i=0; i<numRows; i++){
+            
+            // Base case; first row is always [1].
+            if(i == 0){
+                vector<int> current;
+                current.push_back(1);
+                ans.push_back(current);              
+                continue;
+            }
+            
+            // for other rows
+            vector<int> current;
+            
+            // starting number for every row is 1
+            current.push_back(1);            
+            
+            for(int j=1; j<i; j++){
+                int val = ans[i-1][j-1] + ans[i-1][j];
+                current.push_back(val);
+            }            
+            
+            // starting number for every row is 1
+            current.push_back(1);            
+            
+            ans.push_back(current);
         }
-
-        // for other rows
-        vector<long long int> current;
-
-        // starting number for every row is 1
-        current.push_back(1ll);            
-
-        for(int j=1; j<i; j++){
-            long long int val = ans[i-1][j-1] + ans[i-1][j];
-            current.push_back(val);
-        }            
-
-        // starting number for every row is 1
-        current.push_back(1ll);            
-
-        ans.push_back(current);
+        
+        return ans;
     }
-
-    return ans;
-}
+};
 
