@@ -1,0 +1,88 @@
+Problem Number: 31
+Problem Name: Next Permutation
+Link: https://leetcode.com/problems/next-permutation/
+
+Question
+A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
+    -> For example, for arr = [1,2,3], the following are considered permutations of arr: [1,2,3], [1,3,2], [3,1,2], [2,3,1].
+
+The next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array 
+are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted 
+container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).
+    -> For example, the next permutation of arr = [1,2,3] is [1,3,2].
+    -> Similarly, the next permutation of arr = [2,3,1] is [3,1,2].
+    -> While the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.
+
+Given an array of integers nums, find the next permutation of nums.
+The replacement must be in place and use only constant extra memory.
+
+
+Time Complexity: O(N), where N is the number of elements
+Space Complexity: O(1)
+
+
+Solution
+
+APPROACH 1
+// main idea is to find the suffix which is a non decreasing sequence. From the suffix we will find the next greater number for the last number of prefix. 
+// Replace both the numbers and reverse the new suffix which will be now in increasing order. This, will give the next lexographical greater permutation
+
+class Solution {
+public:
+    
+    // function to reverse
+    void reverse(vector<int>& nums, int si, int ei){
+        while(si <= ei){
+            int temp = nums[si];
+            nums[si] = nums[ei];
+            nums[ei] = temp;
+            si++;
+            ei--;            
+        }
+    }
+    
+    void nextPermutation(vector<int>& nums) {
+        
+        int n = nums.size();
+        
+        // finding index from right which breaks the non decreasing sequence
+        int idx = n-1;        
+        while(idx > 0){
+            if(nums[idx] > nums[idx-1]){
+                break;
+            }
+            
+            idx--;
+        }
+        
+        // if all the numbers from right follow non decreasing sequence, then the array is the last permutation. We will change the array to the first permutation 
+        // by reversing the whole array
+        if(idx == 0){
+            reverse(nums, 0, n-1);
+            return ;
+        }
+        
+        // the number which breaks the non decreasing sequence will be swapped with the number just bigger than that. Second number will be present in the right 
+        // side of the first number
+        int idx_to_swap_1 = idx - 1;    // first number
+        int idx_to_swap_2 = idx;        // second number
+        
+        // finding the number to right of the index which is just greater than the first number
+        while(idx_to_swap_2 < n){
+            if(nums[idx_to_swap_1] >= nums[idx_to_swap_2]){                
+                break;
+            }
+            
+            idx_to_swap_2++;
+        }
+        idx_to_swap_2--;
+        
+        // swapping them 
+        int temp = nums[idx_to_swap_1];
+        nums[idx_to_swap_1] = nums[idx_to_swap_2];
+        nums[idx_to_swap_2] = temp;
+        
+        // numbers from the first index till end of the array will be reversed to get the next lexographically biggest number
+        reverse(nums, idx, n-1);
+    }
+};
