@@ -7,8 +7,8 @@ You are given an integer N. Your task is to return a 2-D ArrayList containing th
 A Pascal's triangle is a triangular array constructed by summing adjacent elements in preceding rows. Pascal's triangle contains the values of the binomial coefficient.
 
 
-Time Complexity: O(N * N), where N are the number of rows
-Space Complexity: O(N * N), where N are the number of rows
+Time Complexity: O(N * N), where N is the number of rows
+Space Complexity: O(N * N), where N is the number of rows
 
 
 Solution
