@@ -14,74 +14,74 @@ Space Complexity: O(1)
 
 Solution
 
-APPROACH 1
-#include <bits/stdc++.h> 
-void setZeros(vector<vector<int>> &matrix){
-	// Write your code here.
-    int n = matrix.size();
-    int m = matrix[0].size();
-
-    // checks whether the first column needs to be zero or not
-    bool first_col_zero = false;
-
-    // traversing the matrix to mark zeroes to rows and columns
-    for(int i=0; i<n; i++){            
-        for(int j=0;j<m; j++){
-            if(matrix[i][j] == 0){
-                // if it is the first element of the matrix then we will mark first row and first column zero
-                if(i == 0  && j == 0){
-                    first_col_zero = true;
-                    matrix[0][0] = 0;
-                }
-                // if element in the first row is zero, then we have to mark first row and corresponding column zero
-                else if(i == 0){
-                    matrix[0][0] = 0;
-                    matrix[0][j] = 0;
-                }
-                // if element in the first column is zero, then we have to mark first column and corresponding row zero
-                else if(j == 0){
-                    matrix[i][0] = 0;
-                    first_col_zero = true;
-                }
-                // if element is zero, then we have to mark corresponding row and column zero
-                else{
-                    matrix[i][0] = 0;
-                    matrix[0][j] = 0;
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        
+        int n = matrix.size();
+        int m = matrix[0].size();
+        
+        // checks whether the first column needs to be zero or not
+        bool first_col_zero = false;
+        
+        // traversing the matrix to mark zeroes to rows and columns
+        for(int i=0; i<n; i++){            
+            for(int j=0;j<m; j++){
+                if(matrix[i][j] == 0){
+                    // if it is the first element of the matrix then we will mark first row and first column zero
+                    if(i == 0  && j == 0){
+                        first_col_zero = true;
+                        matrix[0][0] = 0;
+                    }
+                    // if element in the first row is zero, then we have to mark first row and corresponding column zero
+                    else if(i == 0){
+                        matrix[0][0] = 0;
+                        matrix[0][j] = 0;
+                    }
+                    // if element in the first column is zero, then we have to mark first column and corresponding row zero
+                    else if(j == 0){
+                        matrix[i][0] = 0;
+                        first_col_zero = true;
+                    }
+                    // if element is zero, then we have to mark corresponding row and column zero
+                    else{
+                        matrix[i][0] = 0;
+                        matrix[0][j] = 0;
+                    }
                 }
             }
         }
-    }
-
-
-    // marking elements whose rows are marked zero
-    for(int i=1; i<n; i++){
-        if(matrix[i][0] == 0){
+        
+        // marking elements whose rows are marked zero
+        for(int i=1; i<n; i++){
+            if(matrix[i][0] == 0){
+                for(int j=0; j<m; j++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        // marking elements whose columns are marked zero
+        for(int j=1; j<m; j++){
+            if(matrix[0][j] == 0){
+                for(int i=0; i<n; i++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        // if the first row is zero then all first row elements will be zero
+        if(matrix[0][0] == 0){
             for(int j=0; j<m; j++){
-                matrix[i][j] = 0;
+                matrix[0][j] = 0;
             }
         }
-    }
-
-    // marking elements whose columns are marked zero
-    for(int j=1; j<m; j++){
-        if(matrix[0][j] == 0){
+        
+        // if the first column is zero then all first column elements will be zero
+        if(first_col_zero == true){
             for(int i=0; i<n; i++){
-                matrix[i][j] = 0;
+                matrix[i][0] = 0;
             }
         }
     }
-
-    // if the first row is zero then all first row elements will be zero
-    if(matrix[0][0] == 0){
-        for(int j=0; j<m; j++){
-            matrix[0][j] = 0;
-        }
-    }
-
-    // if the first column is zero then all first column elements will be zero
-    if(first_col_zero == true){
-        for(int i=0; i<n; i++){
-            matrix[i][0] = 0;
-        }
-    }    
-}
+};
