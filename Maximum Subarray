@@ -1,0 +1,40 @@
+Problem Number: 53
+Problem Name: Maximum Subarray
+Link: https://leetcode.com/problems/maximum-subarray/
+
+Question
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+A subarray is a contiguous part of an array.
+
+
+Time Complexity: O(N), where N is the number of elements
+Space Complexity: O(1)
+
+
+Solution
+
+// Kadane's Algorithm 
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+                
+        int msum=INT_MIN;
+        int csum=0;
+        for(int sp=0;sp<nums.size();sp++){
+            // If the csum comes out to be negative, this means taking them forward won't be helpful. So, removing them from the csum (or current subarray) and 
+            // creating a new subarray with the current number in it
+            if(csum<0){
+                csum=nums[sp];
+            }
+            // if the csum is positive, this means taking them forward is helpful. So, adding new number to the current subarray
+            else{                
+                csum+=nums[sp];
+            }
+            
+            // finding the maximum sum from subarrays
+            msum = max(msum,csum);
+        }
+        
+        return msum;
+    }
+};
