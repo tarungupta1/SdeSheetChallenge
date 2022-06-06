@@ -8,11 +8,13 @@ such a way that if a cell has a value 0 (matrix[i][j] == 0), then all the cells 
 You must do it in place.
 
 
-Time Complexity: O(N * M), where N and M is the number of rows and columns in the matrix
+Time Complexity: O(N * M), where N and M are the number of rows and columns in the matrix
 Space Complexity: O(1)
 
 
 Solution
+
+APPROACH 1
 #include <bits/stdc++.h> 
 void setZeros(vector<vector<int>> &matrix){
 	// Write your code here.
