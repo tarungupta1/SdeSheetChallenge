@@ -1,0 +1,82 @@
+Problem Number: 118
+Problem Name: Pascal's Triangle
+Link: https://leetcode.com/problems/pascals-triangle/
+
+Question
+You are given an integer N. Your task is to return a 2-D ArrayList containing the pascal’s triangle till the row N.
+A Pascal's triangle is a triangular array constructed by summing adjacent elements in preceding rows. Pascal's triangle contains the values of the binomial coefficient.
+
+
+Time Complexity: O(N * N), where N are the number of rows
+Space Complexity: O(N * N), where N are the number of rows
+
+
+Solution
+
+APPROACH 1
+#include <bits/stdc++.h> 
+vector<vector<long long int>> printPascal(int n) {
+  // Write your code here.
+    
+    vector<vector<long long int>> ans;
+        
+    // using formulae:  nCr = (nCr-1 * (n - r + 1)/r)              
+    for(long long int i=0; i<n; i++){
+
+        vector<long long int> current;
+        // starting number for every row is 1
+        current.push_back(1);
+
+        // remaining number in the row are found out by the above formulae
+        long long int val = 1;
+        for(long long int j=1; j<=i; j++){
+            val = (val * (i - j + 1)) / j;
+            current.push_back(val);
+        }
+
+        ans.push_back(current);
+    }
+
+    return ans;
+}
+
+
+
+APPROACH 2
+#include <bits/stdc++.h> 
+vector<vector<long long int>> printPascal(int n) {
+  // Write your code here.
+    
+    vector<vector<long long int>> ans;
+        
+    // Each triangle element (other than the first and last of each row) is equal to the sum of the elements 'above-and-to-the-left' and 'above-and-to-the-right'.
+    for(int i=0; i<n; i++){
+
+        // Base case; first row is always [1].
+        if(i == 0){
+            vector<long long int> current;
+            current.push_back(1);
+            ans.push_back(current);              
+            continue;
+        }
+
+        // for other rows
+        vector<long long int> current;
+
+        // starting number for every row is 1
+        current.push_back(1ll);            
+
+        for(int j=1; j<i; j++){
+            long long int val = ans[i-1][j-1] + ans[i-1][j];
+            current.push_back(val);
+        }            
+
+        // starting number for every row is 1
+        current.push_back(1ll);            
+
+        ans.push_back(current);
+    }
+
+    return ans;
+}
+
